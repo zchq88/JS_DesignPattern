@@ -1,5 +1,5 @@
 /**
- *   接口
+ *   接口 (增加链式调用)
  */
 var Interface = function (object, methods) {
   for (var i = 0, len = methods.length; i < len; i++) {
@@ -16,10 +16,12 @@ function Person(name) {
   this.sayjob = function () {
     console.log('say');
     this.job();
+    return this;
   };
   this.sayage = function () {
     console.log('say');
     this.age();
+    return this;
   };
 }
 function creatPerson(name) {
@@ -31,6 +33,7 @@ function Student(name) {
   this.__proto__ = creatPerson(name);
   this.job = function () {
     console.log('job is student');
+    return this;
   };
 }
 function creatStudent(name) {
@@ -38,7 +41,7 @@ function creatStudent(name) {
   return object;
 }
 var b = creatStudent('b');
-b.job();
-//b.age();
-b.sayjob();
-//b.sayage();
+
+b.job()//.age();
+b.sayjob()//.sayage();
+//b.sayjob().sayjob();
