@@ -1,16 +1,7 @@
 /**
  *   接口 (增加链式调用)
  */
-var Interface = function (object, methods) {
-  for (var i = 0, len = methods.length; i < len; i++) {
-    if (typeof methods[i] !== 'string') {
-      throw new Error('Interface constructor expects method names to be passed in as a string.');
-    }
-    object[methods[i]] = function () {
-      throw new Error(this.constructor.name + ' Interface function is undefined');
-    };
-  }
-};
+var DP = require("./DesignPattern.js");
 function Person(name) {
   this.name = name;
   this.sayjob = function () {
@@ -23,24 +14,18 @@ function Person(name) {
     this.age();
     return this;
   };
+  DP.Interface(this, ['job', 'age']);
 }
-function creatPerson(name) {
-  var object = new Person(name);
-  Interface(object, ['job', 'age']);
-  return object;
-}
+
 function Student(name) {
-  this.__proto__ = creatPerson(name);
+  this.__proto__ = new Person(name);
   this.job = function () {
     console.log('job is student');
     return this;
   };
 }
-function creatStudent(name) {
-  var object = new Student(name);
-  return object;
-}
-var b = creatStudent('b');
+
+var b = new Student('b');
 
 b.job()//.age();
 b.sayjob()//.sayage();
